@@ -112,15 +112,9 @@ async function autoSubmitScore(replayBlob) {
     try {
         const currentUser = await window.websim.getCurrentUser();
         
-        // Use a one-time subscription to ensure we have the latest user scores
-        const userScores = await new Promise((resolve) => {
-            const unsubscribe = room.collection('score_v1').filter({ username: currentUser.username }).subscribe(scores => {
-                if (scores.length > 0 || room.collection('score_v1').isLoaded()) {
-                    resolve(scores);
-                    unsubscribe();
-                }
-            });
-        });
+        // Get the user's current scores from the collection.
+        // getList() returns the current data, which is sufficient for our one-time check.
+        const userScores = room.collection('score_v1').filter({ username: currentUser.username }).getList();
 
         userScores.sort((a, b) => a.score - b.score);
         
