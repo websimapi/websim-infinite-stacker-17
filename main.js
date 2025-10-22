@@ -42,6 +42,7 @@ function init() {
         onScoreUpdate: (score) => {
             ui.updateScore(score);
             canvasUI.updateScore(score);
+            sky.updateScore(score);
         },
         onGameOver: (score) => {
             setTimeout(() => {
@@ -91,6 +92,7 @@ function startGame() {
     ui.hideGameOver();
     ui.showInstructions(true);
     canvasUI.updateScore(0);
+    sky.updateScore(0);
     replayBlobPromise = null;
     replayUrlPromise = null;
     
